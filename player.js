@@ -1,11 +1,15 @@
 // Элементы упрвления
 const audio = document.querySelector('.audio');
+const track = document.querySelector('.track');
 const info = document.querySelector('.info');
-const time = document.querySelector('.time');
-const play = document.querySelector('.play');
-const pause = document.querySelector('.pause');
+const volume = document.querySelector('.volume');
 const prev = document.querySelector('.prev');
+const play = document.querySelector('.play');
 const next = document.querySelector('.next');
+const time = document.querySelector('.time');
+const hour = document.querySelector('.hour');
+const min = document.querySelector('.min');
+const sec = document.querySelector('.sec');
 const file = document.querySelector('.file');
 const listbut = document.querySelector('.listbut');
 const list = document.querySelector('.list');
@@ -15,7 +19,9 @@ let treckList = [];
 let currentTreck = null;
 let palyed = false;
 
-play.onclick = () => {
+// Функционал приложения
+audio.ontimeupdate = handleChangeTracker;
+play.onclick = (e) => {
     palyed = !palyed;
     treckStartPause(palyed);
 };
@@ -38,7 +44,8 @@ function changeAudioFiles() {
         const li = document.createElement('li');
         const span = document.createElement('span');
         const del = document.createElement('button');
-        del.innerHTML = 'del';
+        del.classList.add('del');
+        del.innerHTML = '✘';
         del.onclick = handleTrackDelet;
         span.innerHTML = el.name;
         li.id = el.id;
@@ -59,6 +66,10 @@ function changeAudioFiles() {
             el.classList.add('active');
         }
     });
+    list.classList.remove('listhide');
+    if (treckList.length) {
+        info.innerHTML = treckList[treckList.length - 1].name;
+    }
 }
 
 // Обработчик начала и паузы проигрывания трека
@@ -88,6 +99,9 @@ function treckStartPause(variant) {
             audio.pause();
         }
     } else {
+        audio.src = '';
+        play.firstElementChild.classList.remove('hide');
+        play.lastElementChild.classList.add('hide');
         info.innerHTML = 'Невыбрано не одного аудио файла';
         return false;
     }
@@ -140,10 +154,33 @@ function handleNextTreck() {
     } else if (treckList.length && !treckList[currentTreck + 1]) {
         currentTreck = 0;
         audio.src = URL.createObjectURL(treckList[currentTreck]);
-        treckStartPause(play);
+        treckStartPause(palyed);
     } else {
         info.innerHTML = 'Невыбрано не одного аудио файла';
         return false;
+    }
+}
+
+// Форматировщик числа
+function format(num) {
+    if (num < 10) {
+        return (num = '0' + num);
+    } else {
+        return num.toString();
+    }
+}
+
+// Обработчик изменения проложения трекера
+function handleChangeTracker() {
+    const currentTime = audio.currentTime;
+    const duration = audio.duration;
+    const value = ((currentTime / duration) * 100).toFixed(2);
+
+    if (value !== 'NaN') {
+        hour.innerHTML = format(Math.floor((duration - currentTime) / 3600));
+        min.innerHTML = format(Math.floor((duration - currentTime) / 60));
+        sec.innerHTML = format(Math.floor((duration - currentTime) % 60));
+        track.value = value;
     }
 }
 
