@@ -1,4 +1,4 @@
-/* Палитра и основные стили */
+/* ПАЛИТРА*/
 :root {
     line-height: 1.5;
     font-weight: 400;
@@ -14,6 +14,8 @@
     --blue: #001aff;
     --red: #ff0000;
 }
+
+/* СТИЛИЗАЦИЯ ДОКУМЕНТА */
 * {
     margin: 0;
     padding: 0;
@@ -33,7 +35,6 @@
     border-radius: 5px;
     border: 3px solid var(--black);
 }
-/* Стилизация документа */
 html,
 body {
     width: 100%;
@@ -54,6 +55,7 @@ input {
 .hide {
     display: none;
 }
+/* СТИЛИЗАЦИЯ ОСНОВНОЙ ПАНЕЛИ  */
 .player {
     box-shadow: 1px 1px 4px var(--dark);
     border-radius: 10px;
@@ -82,7 +84,7 @@ input {
 .track {
     width: 90%;
     height: 3px;
-    margin: 20px 0;
+    margin: 15px 0;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -120,30 +122,47 @@ input {
     height: 3px;
     background-color: #474747;
 }
-/* Стилизация кнопки воспроизведения */
-.play {
-    box-shadow: 1px 1px 6px var(--dark);
-    border-radius: 50%;
-    padding: 12px;
+/* Стилизация панельки управления */
+.buttons {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    margin: 10px;
+}
+.buttons button {
+    box-shadow: 1px 1px 6px var(--dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     fill: var(--black);
     border: none;
+    margin: 0 6px;
 }
-.fix {
-    margin-right: -4px;
-}
-.play:active {
+.buttons button:active {
     scale: 0.9;
 }
-.play:hover {
+.buttons button:hover {
     box-shadow: 1px 1px 12px var(--black);
     fill: var(--white);
     background: var(--black);
 }
+/* Стилизация кнопки воспроизведения */
+.play {
+    width: 40px;
+    height: 40px;
+    padding: 12px;
+}
+.prev,
+.next {
+    width: 35px;
+    height: 35px;
+    padding: 6px;
+}
+.fix {
+    margin-right: -4px;
+}
+
 /*  Стилизацтя Списка воспроизведения */
 .list {
     height: 400px;
