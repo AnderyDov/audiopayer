@@ -17,6 +17,7 @@ const list = document.querySelector('.list');
 // Состояние приложения
 let treckList = [];
 let currentTreck = null;
+let currentTimeInTrack = 0;
 let palyed = false;
 
 // Функционал приложения
@@ -94,6 +95,7 @@ function treckStartPause(variant) {
             play.firstElementChild.classList.contains('hide') &&
             !play.lastElementChild.classList.contains('hide')
         ) {
+            audio.currentTime = currentTimeInTrack;
             audio.play();
         } else {
             audio.pause();
@@ -109,6 +111,7 @@ function treckStartPause(variant) {
 
 // Обработчик выбора трека в списке воспроизведения
 function handleChangeTreck(index) {
+    currentTimeInTrack = 0;
     currentTreck = index;
     treckStartPause(palyed);
 }
@@ -124,6 +127,7 @@ function handleTrackDelet(e) {
     treckList = treckList.filter((el) => {
         return el.id !== +e.currentTarget.parentElement.id;
     });
+    currentTimeInTrack = 0;
     currentTreck = 0;
     palyed = false;
     treckStartPause(false);
@@ -131,6 +135,7 @@ function handleTrackDelet(e) {
 
 // Обработчик переключения трека назад
 function handlePrevTreck() {
+    currentTimeInTrack = 0;
     if (treckList.length && treckList[currentTreck - 1]) {
         --currentTreck;
         audio.src = URL.createObjectURL(treckList[currentTreck]);
@@ -147,6 +152,7 @@ function handlePrevTreck() {
 
 // Обработчик переключения трека вперёд
 function handleNextTreck() {
+    currentTimeInTrack = 0;
     if (treckList.length && treckList[currentTreck + 1]) {
         ++currentTreck;
         audio.src = URL.createObjectURL(treckList[currentTreck]);
@@ -180,6 +186,7 @@ function handleChangeTracker() {
         hour.innerHTML = format(Math.floor((duration - currentTime) / 3600));
         min.innerHTML = format(Math.floor((duration - currentTime) / 60));
         sec.innerHTML = format(Math.floor((duration - currentTime) % 60));
+        currentTimeInTrack = currentTime;
         track.value = value;
     }
 }
