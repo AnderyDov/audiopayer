@@ -12,26 +12,72 @@ const list = document.querySelector('.list');
 
 // Состояние приложения
 let treckList = [];
+let currentTreck = null;
 
 file.onchange = () => {
     for (const i in file.files) {
         if (typeof file.files[i] === 'object') {
+            obj = file.files[i];
+            obj.id = Math.random();
             treckList.push(file.files[i]);
         }
     }
     console.log(treckList);
-    treckList.forEach((el) => {
+    list.innerHTML = '';
+    treckList.forEach((el, index) => {
         const li = document.createElement('li');
         const span = document.createElement('span');
-        const but = document.createElement('button');
-        but.innerHTML = 'del';
+        const del = document.createElement('button');
+        del.innerHTML = 'del';
+        del.onclick = (e) => {
+            e.currentTarget.parentElement.remove();
+            treckList = treckList.filter((el) => {
+                return el.id !== +e.currentTarget.parentElement.id;
+            });
+            console.log(treckList);
+        };
         span.innerHTML = el.name;
+        li.id = el.id;
+        li.classList.add('li');
         li.append(span);
-        li.append(but);
+        li.append(del);
+        li.onclick = (e) => {
+            document.querySelectorAll('.li').forEach((el) => {
+                el.classList.remove('active');
+            });
+            currentTreck = index;
+            audio.src = URL.createObjectURL(treckList[currentTreck]);
+            console.log(currentTreck);
+            e.currentTarget.classList.add('active');
+            play.onclick = (e) => {
+                if (treckList.length) {
+                    const t = e.currentTarget;
+                    t.firstElementChild.classList.toggle('hide');
+                    t.lastElementChild.classList.toggle('hide');
+                    if (
+                        t.firstElementChild.classList.contains('hide') &&
+                        !t.lastElementChild.classList.contains('hide')
+                    ) {
+                        audio.play();
+                    } else {
+                        audio.pause();
+                    }
+                } else {
+                    info.innerHTML = 'Невыбрано не одного аудио файла';
+                }
+            };
+
+            listbut.onclick = () => {
+                list.classList.toggle('listhide');
+            };
+        };
         list.append(li);
     });
-    audio.src = URL.createObjectURL(treckList[treckList.length - 1]);
+    currentTreck = treckList.length ? treckList.length - 1 : 0;
+    audio.src = URL.createObjectURL(treckList[currentTreck]);
     file.value = null;
+    play.firstElementChild.classList.remove('hide');
+    play.lastElementChild.classList.add('hide');
 };
 // console.log(audio.src);
 // console.log(audio.controlsList);
