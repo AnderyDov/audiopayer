@@ -19,6 +19,20 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+*::-webkit-scrollbar-track {
+    background: var(--black);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: var(--white);
+    height: 30px;
+    border-radius: 5px;
+    border: 3px solid var(--black);
+}
 /* Стилизация документа */
 html,
 body {
@@ -57,6 +71,8 @@ body {
     padding: 5px;
     font-weight: 600;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /* Стилизация трека */
 .track {
@@ -126,6 +142,27 @@ body {
     fill: var(--white);
     background: var(--black);
 }
-input {
-    margin: 10px;
+/*  Стилизацтя Списка воспроизведения */
+.list {
+    height: 400px;
+    width: 100%;
+    transition: all 0.3s ease;
+    background: var(--black);
+    transform-origin: top;
+    color: var(--white);
+    padding: 0 20px;
+    overflow-y: scroll;
+}
+.listhide {
+    height: 0;
+}
+.list li:nth-child(1) {
+    margin-top: 20px;
+}
+.list li {
+    list-style: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

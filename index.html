@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="player.css" />
     </head>
     <body>
-        <audio id="audio" src="./audio/treck2.mp3"></audio>
+        <audio id="audio"></audio>
         <div class="player">
             <div class="info">info</div>
             <input type="range" class="track" />
@@ -33,8 +33,12 @@
                         />
                     </svg>
                 </button>
+                <button class="listbut">list</button>
             </div>
-            <!-- <input type="file" /> -->
+            <input class="file" type="file" multiple />
+            <ul class="list">
+                <li></li>
+            </ul>
         </div>
     </body>
     <script src="player.js"></script>
