@@ -1,0 +1,67 @@
+/* Палитра и основные стили */
+:root {
+    line-height: 1.5;
+    font-weight: 400;
+
+    --dark: #1c1b21;
+    --gray-light: #919191;
+    --bg: #ddd9d9;
+    --white: #e9e9e9;
+    --primary: #2245e3;
+    --secondary: #cc46c9;
+    --primary-hover: #844fe6;
+    --blue: #001aff;
+    --red: #ff0000;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Стилизация документа */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    color: var(--dark);
+    background: var(--bg);
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.player {
+    box-shadow: 1px 1px 4px var(--dark);
+    border-radius: 10px;
+    width: 95vw;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.info {
+    width: 100%;
+    /* height: 30px; */
+    background: var(--gray-light);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    color: var(--white);
+    padding: 5px;
+    display: flex;
+}
+.track {
+    width: 90%;
+    height: 3px;
+    background-color: var(--gray-light);
+    margin: 20px 0;
+}
+
+.time {
+    width: 0;
+    height: 3px;
+    background-color: #474747;
+}
