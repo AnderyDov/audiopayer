@@ -19,17 +19,21 @@ let treckList = [];
 let currentTreck = null;
 let currentTimeInTrack = 0;
 let palyed = false;
+let muted = false;
 
 // Функционал приложения
 play.onclick = (e) => {
     palyed = !palyed;
     treckStartPause(palyed);
 };
+
 listbut.onclick = showTreckList;
 file.onchange = changeAudioFiles;
 prev.onclick = handlePrevTreck;
 next.onclick = handleNextTreck;
 audio.onended = handleNextTreck;
+volume.onclick = handleMute;
+// track.onmouseover = pauseCastom;
 
 // Обработчик добавления аудио файлов
 function changeAudioFiles() {
@@ -181,25 +185,39 @@ setInterval(() => {
     const currentTime = audio.currentTime;
     const duration = audio.duration;
     const value = ((currentTime / duration) * 100).toFixed(2);
-    console.log(value);
 
     if (value !== 'NaN') {
         track.onchange = () => {
-            console.log(audio.duration);
-            console.log(audio.currentTime);
             if (audio.duration !== NaN) {
-                console.log(audio.duration);
                 audio.currentTime = Math.floor(
                     (+track.value / 100) * audio.duration,
                 );
             }
         };
-        hour.innerHTML = format(Math.floor((duration - currentTime) / 3600));
-        min.innerHTML = format(Math.floor((duration - currentTime) / 60));
-        sec.innerHTML = format(Math.floor((duration - currentTime) % 60));
-        currentTimeInTrack = currentTime;
-        track.value = value;
+        if (
+            play.firstElementChild.classList.contains('hide') &&
+            !play.lastElementChild.classList.contains('hide')
+        ) {
+            console.log('work');
+            currentTimeInTrack = currentTime;
+            console.log(currentTimeInTrack);
+            hour.innerHTML = format(
+                Math.floor((duration - currentTime) / 3600),
+            );
+            min.innerHTML = format(Math.floor((duration - currentTime) / 60));
+            sec.innerHTML = format(Math.floor((duration - currentTime) % 60));
+            track.value = value;
+        }
     }
 }, 1000);
 
-// console.log(audio.volume);
+// Обработчик отключения звука
+function handleMute() {
+    muted = !muted;
+    audio.muted = muted;
+    if (muted) {
+        volume.classList.add('muted');
+    } else {
+        volume.classList.remove('muted');
+    }
+}
