@@ -276,3 +276,16 @@ input {
 .del:hover {
     color: var(--primary);
 }
+/* Дополнительное */
+.git {
+    position: absolute;
+    bottom: 100px;
+    right: 200px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+.git:hover {
+    fill: var(--red);
+    scale: 1.3;
+}
