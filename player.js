@@ -21,7 +21,6 @@ let currentTimeInTrack = 0;
 let palyed = false;
 
 // Функционал приложения
-audio.ontimeupdate = handleChangeTracker;
 play.onclick = (e) => {
     palyed = !palyed;
     treckStartPause(palyed);
@@ -30,6 +29,7 @@ listbut.onclick = showTreckList;
 file.onchange = changeAudioFiles;
 prev.onclick = handlePrevTreck;
 next.onclick = handleNextTreck;
+audio.onended = handleNextTreck;
 
 // Обработчик добавления аудио файлов
 function changeAudioFiles() {
@@ -177,28 +177,29 @@ function format(num) {
 }
 
 // Обработчик изменения проложения трекера
-function handleChangeTracker() {
+setInterval(() => {
     const currentTime = audio.currentTime;
     const duration = audio.duration;
     const value = ((currentTime / duration) * 100).toFixed(2);
+    console.log(value);
 
     if (value !== 'NaN') {
+        track.onchange = () => {
+            console.log(audio.duration);
+            console.log(audio.currentTime);
+            if (audio.duration !== NaN) {
+                console.log(audio.duration);
+                audio.currentTime = Math.floor(
+                    (+track.value / 100) * audio.duration,
+                );
+            }
+        };
         hour.innerHTML = format(Math.floor((duration - currentTime) / 3600));
         min.innerHTML = format(Math.floor((duration - currentTime) / 60));
         sec.innerHTML = format(Math.floor((duration - currentTime) % 60));
         currentTimeInTrack = currentTime;
         track.value = value;
     }
-}
+}, 1000);
 
-// console.log(audio.src);
-// console.log(audio.controlsList);
-// console.log(audio.crossOrigin);
-// console.log(audio.currentSrc);
-// console.log(audio.currentTime);
-// console.log(audio.disableRemotePlayback);
-// console.log(audio.duration);
-// console.log(audio.ended);
-// console.log(audio.textTracks);
-// console.log(audio.srcObject);
 // console.log(audio.volume);
