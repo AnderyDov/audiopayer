@@ -198,9 +198,7 @@ setInterval(() => {
             play.firstElementChild.classList.contains('hide') &&
             !play.lastElementChild.classList.contains('hide')
         ) {
-            console.log('work');
             currentTimeInTrack = currentTime;
-            console.log(currentTimeInTrack);
             hour.innerHTML = format(
                 Math.floor((duration - currentTime) / 3600),
             );
